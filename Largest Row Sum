@@ -1,0 +1,63 @@
+#include<iostream>
+#include<climits>
+using namespace std;
+
+void rowSum(int arr[][3], int n, int m){
+    cout<<"Printing the sum-->"<<endl;
+    for(int row=0; row < n; row++){
+        int sum = 0;
+        for(int col = 0 ; col < m; col++){
+            sum += arr[row][col];
+        } 
+        cout<<sum<<""<<endl;
+    }
+    cout<<endl;
+}
+
+int maxi(int arr[][3], int n, int m){
+    int maxi = INT_MIN;
+    int rowIndex = -1;
+    for(int row = 0; row < n; row++){
+        int sum = 0;
+        for(int col = 0; col < m; col++){
+            sum += arr[row][col];
+        }
+
+        if(sum > maxi){
+            maxi = sum;
+            rowIndex = row;
+        }
+    }
+    cout<<"The maximum sum is :"<<maxi<<endl;
+    return rowIndex;
+}
+
+int main()
+{
+    int arr[3][3];
+
+    cout<<"Enter the elements"<<endl;
+
+
+    for(int row=0; row<3; row++){
+        for(int col=0; col<3; col++){
+            cin >> arr[row][col];
+        }
+    }
+
+    cout<<"Printing the elements"<<endl;
+
+    for(int row=0; row<3; row++){
+        for(int col=0; col<3; col++){
+            cout << arr[row][col]<<" ";
+        }
+        cout<<endl;
+    }
+    
+    
+    // rowSum(arr, 3, 3);
+    int ansIndex = maxi(arr,3, 3);
+    cout<<"The largest element is in index "<<ansIndex <<endl;
+
+    return 0;
+}
