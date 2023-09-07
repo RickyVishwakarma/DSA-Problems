@@ -1,0 +1,24 @@
+#include <bits/stdc++.h> 
+long long int sumOrProduct(long long int n, long long int q)
+{
+    
+
+    if (q == 1) {
+        long long int sum = 0;
+        for (long long int i = 1; i <= n; i++) {
+            sum += i;
+        }
+        return sum;
+    } else if (q == 2) {
+        long long int product = 1;
+        for (long long int i = 1; i <= n; i++) {
+            // product *= i;
+			product = (product * i) % 1000000007;
+        }
+        return product;
+    } else {
+        // Handle other cases if needed
+        // You can return a default value or handle it as required.
+        return 0;
+    }
+}
