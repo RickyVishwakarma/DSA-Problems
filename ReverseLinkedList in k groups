@@ -1,0 +1,40 @@
+Node* kReverse(Node* head, int k) {
+    if (head == NULL || k == 1) {
+        return head;
+    }
+
+    Node* next = NULL;
+    Node* prev = NULL;
+    Node* curr = head;
+    int count = 0;
+
+    // Check if there are at least k nodes remaining
+    Node* temp = head;
+    int remainingNodes = 0;
+    while (temp != NULL) {
+        remainingNodes++;
+        temp = temp->next;
+    }
+
+    if (remainingNodes < k) {
+        // If remaining nodes are less than k, do not reverse
+        return head;
+    }
+
+    // Reverse the first k nodes
+    while (curr != NULL && count < k) {
+        next = curr->next;
+        curr->next = prev;
+        prev = curr;
+        curr = next;
+        count++;
+    }
+
+    // Recursively reverse the remaining nodes
+    if (next != NULL) {
+        head->next = kReverse(next, k);
+    }
+
+    // 'prev' now contains the head of the reversed K nodes
+    return prev;
+}
