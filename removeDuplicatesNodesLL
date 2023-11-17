@@ -1,0 +1,25 @@
+Node *removeDuplicates(Node *head) {
+    if (head == NULL || head->next == NULL) {
+        return head; // Empty list or single node, no duplicates
+    }
+
+    unordered_map<int, bool> encountered;
+    Node* curr = head;
+    Node* prev = NULL;
+
+    while (curr != NULL) {
+        if (encountered.find(curr->data) != encountered.end()) {
+            // Duplicate found, remove current node
+            prev->next = curr->next;
+            delete curr;
+            curr = prev->next;
+        } else {
+            // New element encountered, mark it in the map
+            encountered[curr->data] = true;
+            prev = curr;
+            curr = curr->next;
+        }
+    }
+
+    return head;
+}
