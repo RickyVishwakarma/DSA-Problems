@@ -1,0 +1,20 @@
+Node *removeDuplicates(Node *head) {
+    // Base case: Empty list or single node
+    if (head == NULL || head->next == NULL) {
+        return head;
+    }
+
+    Node* curr = head;
+
+    while (curr != NULL && curr->next != NULL) {
+        if (curr->data == curr->next->data) {
+            Node* nextNext = curr->next->next;
+            delete (curr->next);
+            curr->next = nextNext;
+        } else {
+            curr = curr->next;
+        }
+    }
+    
+    return head;
+}
