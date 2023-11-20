@@ -1,0 +1,23 @@
+if (head == NULL || head->next == NULL) {
+        return NULL; // No loop exists
+    }
+
+    Node *slow = head;
+    Node *fast = head;
+
+    while (fast != NULL && fast->next != NULL) {
+        slow = slow->next;
+        fast = fast->next->next;
+
+        if (slow == fast) {
+            // Loop detected, move one pointer to head and iterate both until they meet
+            slow = head;
+            while (slow != fast) {
+                slow = slow->next;
+                fast = fast->next;
+            }
+            return slow; // Return the node where the loop begins
+        }
+    }
+
+    return NULL; // No loop found
