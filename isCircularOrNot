@@ -1,23 +1,17 @@
-if (head == NULL || head->next == NULL) {
-        return NULL; // No loop exists
+bool isCircular(Node * head){
+    // base case
+    if(head == NULL){
+        return true;
+    }
+    //
+    Node * temp = head -> next;
+    while(temp != NULL && temp != head)
+    {
+        temp = temp -> next;
     }
 
-    Node *slow = head;
-    Node *fast = head;
-
-    while (fast != NULL && fast->next != NULL) {
-        slow = slow->next;
-        fast = fast->next->next;
-
-        if (slow == fast) {
-            // Loop detected, move one pointer to head and iterate both until they meet
-            slow = head;
-            while (slow != fast) {
-                slow = slow->next;
-                fast = fast->next;
-            }
-            return slow; // Return the node where the loop begins
-        }
+    if(temp == head){
+        return true;
     }
-
-    return NULL; // No loop found
+    return false;
+}
