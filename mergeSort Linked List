@@ -1,0 +1,61 @@
+node* getMiddle(node* head) {
+    if (head == nullptr || head->next == nullptr)
+        return head;
+
+    node* slow = head;
+    node* fast = head->next;
+
+    while (fast != nullptr && fast->next != nullptr) {
+        fast = fast->next->next;
+        slow = slow->next;
+    }
+    return slow;
+}
+
+
+node* merge(node* left, node* right) {
+    if (left == nullptr) return right;
+    if (right == nullptr) return left;
+
+    node* ans = new node(-1);
+    node* temp = ans;
+
+    while (left != nullptr && right != nullptr) {
+        if (left->data < right->data) {
+            temp->next = left;
+            temp = left;
+            left = left->next;
+        } else {
+            temp->next = right;
+            temp = right;
+            right = right->next;
+        }
+    }
+    while (left != nullptr) {
+        temp->next = left;
+        temp = left;
+        left = left->next;
+    }
+    while (right != nullptr) {
+        temp->next = right;
+        temp = right;
+        right = right->next;
+    }
+    ans = ans->next;
+    return ans;
+}
+node* mergeSort(node *head) {
+    if(head == NULL || head -> next == NULL) return head;
+
+    node * mid = getMiddle(head);
+    node * left = head;
+    node * right = mid  -> next;
+    mid -> next = NULL;
+
+    left = mergeSort(left);
+    right = mergeSort(right);
+
+    node * result = merge(left, right);
+    return result;
+
+}
