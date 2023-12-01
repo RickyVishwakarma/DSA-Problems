@@ -1,0 +1,52 @@
+vector<long long> printFirstNegativeInteger(long long int A[], long long int N, long long int K)
+{
+
+    // Traverse for the first window of size K
+    deque<long long int> dq;
+    vector<long long> ans;
+    int i;
+    for (i = 0; i < K; i++)
+    {
+        if (A[i] < 0)
+        {
+            dq.push_back(A[i]);
+        }
+    }
+
+    // Store the first negative integer for the first window
+    if (!dq.empty())
+    {
+        ans.push_back(dq.front());
+    }
+    else
+    {
+        ans.push_back(0);
+    }
+
+    // Traverse the remaining windows
+    for (; i < N; i++)
+    {
+        // Remove elements outside the current window
+        if (!dq.empty() && dq.front() == A[i - K])
+        {
+            dq.pop_front();
+        }
+
+        // Add new element if it's negative
+        if (A[i] < 0)
+        {
+            dq.push_back(A[i]);
+        }
+
+        // Store the first negative integer for the current window
+        if (!dq.empty())
+        {
+            ans.push_back(dq.front());
+        }
+        else
+        {
+            ans.push_back(0);
+        }
+    }
+    return ans;
+}
