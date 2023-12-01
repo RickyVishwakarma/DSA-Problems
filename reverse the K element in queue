@@ -1,0 +1,25 @@
+queue<int> modifyQueue(queue<int> q, int k) {
+    stack<int> s;
+
+    // Push the first K elements into a stack
+    for (int i = 0; i < k; i++) {
+        s.push(q.front());
+        q.pop();
+    }
+
+    // Enqueue the elements from the stack back into the queue
+    while (!s.empty()) {
+        q.push(s.top());
+        s.pop();
+    }
+
+    // Move the remaining elements to the end of the queue
+    int n = q.size();
+    for (int i = 0; i < n - k; i++) {
+        int element = q.front();
+        q.pop();
+        q.push(element);
+    }
+
+    return q;
+}
