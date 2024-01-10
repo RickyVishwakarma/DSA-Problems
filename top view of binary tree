@@ -1,0 +1,41 @@
+class Solution {
+public:
+    vector<int> topView(Node *root) {
+        vector<int> ans;
+        if(root == NULL) return ans;
+        
+        map<int, int> topNode;
+        queue<pair<Node *, int>> q;
+        
+        q.push({root, 0});
+        
+        while(!q.empty()){
+            auto temp = q.front();
+            q.pop();
+            
+            Node *frontNode = temp.first;
+            int hd = temp.second;
+            
+            // Update top view map only if the current horizontal distance is not already in the map
+            if(topNode.find(hd) == topNode.end()){
+                topNode[hd] = frontNode->data;
+            }
+            
+            // Process the left child
+            if(frontNode->left){
+                q.push({frontNode->left, hd - 1});
+            }
+            
+            // Process the right child
+            if(frontNode->right){
+                q.push({frontNode->right, hd + 1});
+            }
+        }
+        
+        // Populate the result vector
+        for(auto i : topNode){
+            ans.push_back(i.second);
+        }
+        return ans;
+    }
+};
