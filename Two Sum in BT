@@ -1,0 +1,28 @@
+class Solution {
+public:
+    void inOrder(TreeNode * root, vector<int>&in){
+        if(root == NULL) return;
+
+        inOrder(root -> left, in);
+        in.push_back(root -> val);
+        inOrder(root -> right, in);
+    }
+    bool findTarget(TreeNode* root, int k) {
+        vector<int> inOrderVal;
+        inOrder(root, inOrderVal);
+        int i = 0 , j = inOrderVal.size() - 1;
+
+        while(i < j){
+            int sum = inOrderVal[i] + inOrderVal[j];
+
+            if(sum == k){
+                return true;
+            }else if(sum > k){
+                j--;
+            }else{
+                i++;
+            }
+        }
+        return false;
+    }
+};
