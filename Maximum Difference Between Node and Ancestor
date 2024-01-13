@@ -1,0 +1,29 @@
+class Solution {
+public:
+    pair<int, int> maxDiffUtil(TreeNode* node, int* result) {
+        if (node == nullptr)
+            return {INT_MAX, INT_MIN};
+
+        if (node->left == nullptr && node->right == nullptr)
+            return {node->val, node->val};
+
+        auto leftMinMax = maxDiffUtil(node->left, result);
+        auto rightMinMax = maxDiffUtil(node->right, result);
+
+        int minInSubtree = min(leftMinMax.first, rightMinMax.first);
+        int maxInSubtree = max(leftMinMax.second, rightMinMax.second);
+
+        *result = max(*result, max(node->val - minInSubtree, maxInSubtree - node->val));
+
+        return {min(minInSubtree, node->val), max(maxInSubtree, node->val)};
+    }
+
+    int maxAncestorDiff(TreeNode* root) {
+        if (root == nullptr)
+            return 0;
+
+        int result = INT_MIN;
+        maxDiffUtil(root, &result);
+        return result;
+    }
+};
