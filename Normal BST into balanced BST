@@ -1,0 +1,31 @@
+template <typename T>
+void inOrder(TreeNode<T>* root, vector<T>& in) {
+    if (root == NULL) return;
+
+    inOrder(root->left, in);
+    in.push_back(root->data);
+    inOrder(root->right, in);
+}
+
+template <typename T>
+TreeNode<T>* inOrderToBST(int s, int e, vector<T>& in) {
+    // base case
+    if (s > e) return NULL;
+
+    int mid = (e + s) / 2;
+
+    TreeNode<T>* root = new TreeNode<T>(in[mid]);
+    root->left = inOrderToBST(s, mid - 1, in);
+    root->right = inOrderToBST(mid + 1, e, in);
+
+    return root; // Added return statement
+}
+
+template <typename T>
+TreeNode<T>* balancedBst(TreeNode<T>* root) {
+    vector<T> inOrderVal;
+
+    inOrder(root, inOrderVal);
+
+    return inOrderToBST(0, inOrderVal.size() - 1, inOrderVal);
+}
