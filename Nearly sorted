@@ -1,0 +1,25 @@
+vector<int> nearlySorted(int arr[], int num, int K) {
+    priority_queue<int, vector<int>, greater<int>> minHeap;
+
+    // Create a min heap with the first K+1 elements
+    for (int i = 0; i < min(K+1, num); ++i) {
+        minHeap.push(arr[i]);
+    }
+
+    vector<int> result;
+
+    // Process the rest of the elements
+    for (int i = K+1; i < num; ++i) {
+        result.push_back(minHeap.top());
+        minHeap.pop();
+        minHeap.push(arr[i]);
+    }
+
+    // Process the remaining elements in the heap
+    while (!minHeap.empty()) {
+        result.push_back(minHeap.top());
+        minHeap.pop();
+    }
+
+    return result;
+}
