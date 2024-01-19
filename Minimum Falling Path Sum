@@ -1,0 +1,21 @@
+#include <vector>
+#include <climits>
+
+class Solution {
+public:
+    int minFallingPathSum(vector<vector<int>>& matrix) {
+        int n = matrix.size();
+        int m = matrix[0].size();
+
+        // Iterate from the second-to-last row to the first row
+        for (int i = n - 2; i >= 0; --i) {
+            for (int j = 0; j < m; ++j) {
+                // Update the current position with the minimum path sum from the row below
+                matrix[i][j] += min({matrix[i + 1][j], matrix[i + 1][max(0, j - 1)], matrix[i + 1][min(m - 1, j + 1)]});
+            }
+        }
+
+        // Find the minimum value in the first row, which represents the minimum falling path sum
+        return *min_element(matrix[0].begin(), matrix[0].end());
+    }
+};
